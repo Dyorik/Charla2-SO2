@@ -54,6 +54,19 @@ pipeline {
                 }
             }
         }
+
+        stage('Ejecutar Contenedor') {
+            steps {
+                script {
+                    sh '''
+                    docker stop $CONTAINER_NAME || true
+                    docker rm $CONTAINER_NAME || true
+                    docker run -d --name $CONTAINER_NAME -p 3000:3000 $IMAGE_NAME
+                    docker logs $CONTAINER_NAME  # Ver los logs del contenedor
+                    '''
+                }
+    }
+}
     }
 
     post {
