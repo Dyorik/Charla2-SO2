@@ -6,7 +6,7 @@ pipeline {
         CONTAINER_NAME = "app-contenerizada"
         REPO_URL = "https://github.com/Dyorik/Charla2-SO2.git"
         BRANCH_NAME = "feature/nueva-funcionalidad"
-        CREDENTIALS_ID = "tu-credencial-id"  // Reemplaza con tu ID de credenciales en Jenkins
+        CREDENTIALS_ID = "Pipeline"  // Reemplaza con tu ID de credenciales en Jenkins
     }
 
     stages {
