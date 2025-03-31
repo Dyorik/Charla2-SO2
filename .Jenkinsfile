@@ -1,25 +1,71 @@
 pipeline {
     agent any
+
+    environment {
+        IMAGE_NAME = "mi-aplicacion"
+        CONTAINER_NAME = "app-contenerizada"
+        REPO_URL = "https://github.com/Dyorik/Charla2-SO2.git"
+        BRANCH_NAME = "feature/nueva-funcionalidad"
+        CREDENTIALS_ID = "tu-credencial-id"  // Reemplaza con tu ID de credenciales en Jenkins
+    }
+
     stages {
-        stage('Checkout') {
+        stage('Clonar Repositorio') {
             steps {
-                git branch: 'feature/nueva-funcionalidad', url: 'https://github.com/Dyorik/Charla2-SO2.git'
+                script {
+                    git credentialsId: CREDENTIALS_ID, branch: BRANCH_NAME, url: REPO_URL
+                }
             }
         }
-        stage('Build') {
+
+        stage('Construcción de Imagen Docker') {
             steps {
-                sh 'docker build -t mi-aplicacion:latest .'
+                script {
+                    sh 'docker build -t $IMAGE_NAME .'
+                }
             }
         }
-        stage('Test') {
+
+        stage('Ejecutar Contenedor') {
             steps {
-                sh 'docker run --rm mi-aplicacion:latest npm test'
+                script {
+                    sh '''
+                    docker stop $CONTAINER_NAME || true
+                    docker rm $CONTAINER_NAME || true
+                    docker run -d --name $CONTAINER_NAME -p 3000:3000 $IMAGE_NAME
+                    '''
+                }
             }
         }
-        stage('Deploy') {
+
+        stage('Pruebas') {
             steps {
-                sh 'docker-compose up -d'
+                script {
+                    sh './test_script.sh'
+                }
             }
+        }
+
+        stage('Despliegue') {
+            steps {
+                script {
+                    echo "🚀 Despliegue exitoso. La aplicación está corriendo en Docker."
+                }
+            }
+        }
+    }
+
+    post {
+        always {
+            script {
+                sh 'docker ps -a'
+            }
+        }
+        success {
+            echo "✅ Pipeline ejecutado correctamente."
+        }
+        failure {
+            echo "❌ Error en el pipeline. Verifica los logs."
         }
     }
 }
