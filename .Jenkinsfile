@@ -41,8 +41,8 @@ pipeline {
         stage('Pruebas') {
             steps {
                 script {
-                    sh 'sudo chmod +x ./test_script.sh'
-                    sh './test_script.sh'
+                    sh 'sudo chmod +x test_script.sh'
+                    sh 'test_script.sh'
                 }
             }
         }
