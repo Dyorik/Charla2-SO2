@@ -4,8 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
@@ -17,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/Dyorik/Charla2-SO2/issues"
   },
-  "homepage": "https://github.com/Dyorik/Charla2-SO2#readme"
+  "homepage": "https://github.com/Dyorik/Charla2-SO2#readme",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
 }
