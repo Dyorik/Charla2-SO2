@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/tu-repositorio.git'
+                git branch: 'feature/nueva-funcionalidad', url: 'https://github.com/Dyorik/Charla2-SO2.git'
             }
         }
         stage('Build') {
